@@ -1,0 +1,12 @@
+#!/bin/sh
+usage="$0 [path_to_yaml]"
+if [ -z "$1" ]; then
+    echo $usage
+    exit 1
+fi
+
+manifest_path=$(realpath $1)
+builddir=./build-dir/$(basename $(dirname $manifest_path))
+
+#flatpak-builder --user --install $builddir $manifest_path --force-clean
+flatpak run org.flatpak.Builder --force-clean --sandbox --user --install --install-deps-from=flathub --ccache --mirror-screenshots-url=https://dl.flathub.org/media/ --repo=repo $builddir $manifest_path
