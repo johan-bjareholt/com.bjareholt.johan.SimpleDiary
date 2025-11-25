@@ -1,6 +1,6 @@
 app-id: com.bjareholt.johan.SimpleDiary
 runtime: org.gnome.Platform
-runtime-version: '48'
+runtime-version: '49'
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
@@ -10,18 +10,6 @@ build-options:
     CARGO_HOME: /run/build/rust-flatpak/cargo
 command: simple-diary
 modules:
-  - name: md4c
-    buildsystem: cmake-ninja
-    sources:
-      - type: git
-        url: https://github.com/mity/md4c.git
-        tag: release-0.4.7
-  - name: gtkmdview
-    buildsystem: meson
-    sources:
-      - type: git
-        url: https://github.com/johan-bjareholt/gtkmdview.git
-        tag: 0.4.3
   - name: gtkmdeditor
     buildsystem: simple
     build-options:
@@ -31,16 +19,16 @@ modules:
       - CARGO_FLAGS=--offline make build
       - make install PREFIX=/app
     sources:
-      - type: git
-        url: https://github.com/johan-bjareholt/gtkmdeditor.git
-        tag: v0.1.1
+      - type: archive
+        url: https://github.com/johan-bjareholt/gtkmdeditor/archive/refs/tags/v0.2.3.tar.gz
+        sha256: 5ac12dc6b814f4f290010082735b1ed441a4f7514cd5bbfd712adcd544bdac9f
       - gtkmdeditor-cargo-deps.json
   - name: simple-diary
     buildsystem: meson
     sources:
       - type: git
         url: https://github.com/johan-bjareholt/simple-diary-gtk.git
-        tag: v0.5.0
+        tag: v0.6.0
 finish-args:
   # Wayland access
   - --socket=wayland
